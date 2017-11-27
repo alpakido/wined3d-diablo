@@ -1,0 +1,40 @@
+From c6205531125d18fe6e530146648f8af99de3f457 Mon Sep 17 00:00:00 2001
+From: galaxyhaxz <andrew-haxz@hotmail.com>
+Date: Tue, 22 Apr 2014 22:50:00 +0000
+Subject: [PATCH] Output application's window into Wine's desktop
+
+Source: https://forum.winehq.org/viewtopic.php?t=22340
+---
+ dlls/ddraw/ddraw.c       | 2 +-
+ dlls/wined3d/swapchain.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dlls/ddraw/ddraw.c b/dlls/ddraw/ddraw.c
+index 5f90a75c58..92e91e960e 100644
+--- a/dlls/ddraw/ddraw.c
++++ b/dlls/ddraw/ddraw.c
+@@ -981,7 +981,7 @@ static HRESULT ddraw_set_cooperative_level(struct ddraw *ddraw, HWND window,
+     if ((cooplevel & DDSCL_EXCLUSIVE)
+             && (window != ddraw->dest_window || !(ddraw->cooperative_level & DDSCL_EXCLUSIVE)))
+     {
+-        hr = wined3d_device_acquire_focus_window(ddraw->wined3d_device, window);
++        hr = wined3d_device_acquire_focus_window(ddraw->wined3d_device, GetDesktopWindow());
+         if (FAILED(hr))
+         {
+             ERR("Failed to acquire focus window, hr %#x.\n", hr);
+diff --git a/dlls/wined3d/swapchain.c b/dlls/wined3d/swapchain.c
+index e23e99b67b..67bfd9bb1b 100644
+--- a/dlls/wined3d/swapchain.c
++++ b/dlls/wined3d/swapchain.c
+@@ -566,7 +566,7 @@ static void swapchain_gdi_frontbuffer_updated(struct wined3d_swapchain *swapchai
+     TRACE("Copying surface %p to screen.\n", front);
+ 
+     src_dc = front->dc;
+-    window = swapchain->win_handle;
++    window = GetDesktopWindow();
+     dst_dc = GetDCEx(window, 0, DCX_CLIPSIBLINGS | DCX_CACHE);
+ 
+     /* Front buffer coordinates are screen coordinates. Map them to the
+-- 
+2.15.0
+

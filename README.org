@@ -1,0 +1,24 @@
+This builds patched ~wined3d.dll~ for the original Diablo on Wine.
+Currently only supports Linux (see [[https://github.com/NixOS/nixpkgs/issues/8849][NixOS/nixpkgs#8849]]).
+
+Patch by [[https://github.com/galaxyhaxz][@galaxyhaxz]], sourced from:
+https://forum.winehq.org/viewtopic.php?t=22340
+
+** Install
+
+Grab a prebuilt DLL from the Releases page, preferably one matching your Wine
+version. Copy it to ~$WINEPREFIX/drive_c/Diablo/wined3d.dll~ and then set
+Diablo.exe DDraw renderer to GDI:
+
+: wine REG ADD HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Diablo.exe\\Direct3D /V DirectDrawRenderer /T REG_SZ /D gdi
+
+Launch Diablo. Menu should now be visible, but not without glitches: animated
+images only update on mouse hover.
+
+Mind that, as of 2.11, Diablo does not run on [[https://wine-staging.com/][Wine Staging]].
+
+** Build from source
+
+You will need [[https://nixos.org/nix/][Nix]]. Once installed, run ~nix-build -A <target>~
+inside this repo's directory, where target can be ~stable~, ~development~ or ~staging~.
+After the build is completed, ~result~ will point to patched DLL.
