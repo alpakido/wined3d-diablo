@@ -7,8 +7,8 @@ https://forum.winehq.org/viewtopic.php?t=22340
 ** Install
 
 Grab a prebuilt DLL from the Releases page, preferably one matching your Wine
-version. Copy it to ~$WINEPREFIX/drive_c/Diablo/wined3d.dll~ and then set
-Diablo.exe DDraw renderer to GDI:
+version. Copy it to folder with Diablo.exe and then set Diablo.exe DDraw
+renderer to GDI:
 
 : wine REG ADD HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Diablo.exe\\Direct3D /V DirectDrawRenderer /T REG_SZ /D gdi
 
