@@ -6,7 +6,7 @@ wine.overrideDerivation (old: {
   makeFlags = [ "dlls/wined3d" ];
 
   installPhase = ''
-    install -D dlls/wined3d/wined3d.dll.so $out
+    install -D dlls/wined3d/wined3d.dll.so $out/dlls/wined3d.dll
   '';
 
   patches = [ ./ddraw_hack.patch ];

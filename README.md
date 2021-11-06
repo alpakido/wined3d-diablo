@@ -24,6 +24,6 @@ You will need to install [Nix](https://nixos.org/nix/).
 Run `nix-build -A <target>` inside this repo's directory, where target can be
 one of: `stable`, `development`, `staging`.
 
-After the build is completed, `result` symlink will point to the patched DLL.
+Once the build is completed, `./result/dlls` will contain the patched DLL.
 
 If you want a DLL for macOS, that's the only option at the moment.
